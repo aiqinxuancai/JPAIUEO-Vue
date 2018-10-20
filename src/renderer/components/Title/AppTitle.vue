@@ -5,7 +5,7 @@
         <TitleButton type="min" />
         <TitleButton type="max" />
         <TitleButton type="close" />
-        <el-button v-on:click="handleAfterLeave">{{ name }}</el-button>
+        <!-- <el-button v-on:click="handleAfterLeave">{{ name }}</el-button> -->
     </div>
 </template>
 
