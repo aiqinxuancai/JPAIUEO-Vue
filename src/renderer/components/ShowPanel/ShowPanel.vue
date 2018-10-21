@@ -1,5 +1,4 @@
 <template>
-
   <div id="showpanel"> 
     <el-popover
         placement="top-start"
@@ -7,8 +6,8 @@
         width="200"
         trigger="hover"
         content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-
-        <el-button id="showbutton" type="text" slot="reference">{{ buttontype }}</el-button>
+      
+        <el-button id="showbutton" type="text" slot="reference" @click="changeshow">{{ maintitle }}</el-button>
       
     </el-popover>
   </div>
@@ -16,7 +15,9 @@
 
 <script>
 const { ipcRenderer: ipc } = require("electron");
-import { setInterval } from 'timers';
+const fs = require("fs");
+
+import { clearInterval, setInterval, setTimeout, clearTimeout } from "timers";
 
 export default {
   name: "ShowPanel",
@@ -26,18 +27,26 @@ export default {
   },
   mounted() {},
   created() {
-      setInterval(this.timer,1000);
+    // let timer = setInterval(() => {
+    //   console.log("timer1");
+    // }, 1000);
+  },
+
+  onunload() {
+    console.log("onunload");
   },
   methods: {
-    click: function() {
-      //ipc.send(this.type);
-    },
-    timer: function() {
-      console.log("aaa");
+    changeshow() {
+      console.log("changeshow");
+      fs.readFile(__dirname + "/data.json", "utf8", function(err, data) {
+        var root = JSON.parse(data);
+        //console.log(jsonObj.qing);
+        console.log(root.qing.a[1]);
+      });
     }
   },
   data() {
-    return { buttontype: "あ" };
+    return { maintitle: "A" };
   }
 };
 </script>

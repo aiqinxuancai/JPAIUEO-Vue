@@ -1,0 +1,256 @@
+{
+  "qing": {
+    "a": [
+      {
+        "ping": "あ",
+        "pian": "ア",
+        "pronunciation": "a"
+      },
+      {
+        "ping": "い",
+        "pian": "イ",
+        "pronunciation": "i"
+      },
+      {
+        "ping": "う",
+        "pian": "ウ",
+        "pronunciation": "u"
+      },
+      {
+        "ping": "え",
+        "pian": "エ",
+        "pronunciation": "e"
+      },
+      {
+        "ping": "お",
+        "pian": "オ",
+        "pronunciation": "o"
+      }
+    ],
+    "ka": [
+      {
+        "ping": "か",
+        "pian": "カ",
+        "pronunciation": "ka"
+      },
+      {
+        "ping": "き",
+        "pian": "キ",
+        "pronunciation": "ki"
+      },
+      {
+        "ping": "く",
+        "pian": "ク",
+        "pronunciation": "ku"
+      },
+      {
+        "ping": "け",
+        "pian": "ケ",
+        "pronunciation": "ke"
+      },
+      {
+        "ping": "こ",
+        "pian": "コ",
+        "pronunciation": "ko"
+      }
+    ],
+    "sa": [
+      {
+        "ping": "さ",
+        "pian": "サ",
+        "pronunciation": "sa"
+      },
+      {
+        "ping": "し",
+        "pian": "シ",
+        "pronunciation": "shi"
+      },
+      {
+        "ping": "す",
+        "pian": "ス",
+        "pronunciation": "su"
+      },
+      {
+        "ping": "せ",
+        "pian": "セ",
+        "pronunciation": "se"
+      },
+      {
+        "ping": "そ",
+        "pian": "ソ",
+        "pronunciation": "so"
+      }
+    ],
+    "ta": [
+      {
+        "ping": "た",
+        "pian": "タ",
+        "pronunciation": "ta"
+      },
+      {
+        "ping": "ち",
+        "pian": "チ",
+        "pronunciation": "chi"
+      },
+      {
+        "ping": "つ",
+        "pian": "ツ",
+        "pronunciation": "tsu"
+      },
+      {
+        "ping": "て",
+        "pian": "テ",
+        "pronunciation": "te"
+      },
+      {
+        "ping": "と",
+        "pian": "ト",
+        "pronunciation": "to"
+      }
+    ],
+    "na": [
+      {
+        "ping": "な",
+        "pian": "ナ",
+        "pronunciation": "na"
+      },
+      {
+        "ping": "に",
+        "pian": "ニ",
+        "pronunciation": "ni"
+      },
+      {
+        "ping": "ぬ",
+        "pian": "ヌ",
+        "pronunciation": "nu"
+      },
+      {
+        "ping": "ね",
+        "pian": "ネ",
+        "pronunciation": "ne"
+      },
+      {
+        "ping": "の",
+        "pian": "ノ",
+        "pronunciation": "no"
+      }
+    ],
+    "ha": [
+      {
+        "ping": "は",
+        "pian": "ハ",
+        "pronunciation": "ha"
+      },
+      {
+        "ping": "ひ",
+        "pian": "ヒ",
+        "pronunciation": "hi"
+      },
+      {
+        "ping": "ふ",
+        "pian": "フ",
+        "pronunciation": "fu"
+      },
+      {
+        "ping": "へ",
+        "pian": "ヘ",
+        "pronunciation": "he"
+      },
+      {
+        "ping": "ほ",
+        "pian": "ホ",
+        "pronunciation": "ho"
+      }
+    ],
+    "ma": [
+      {
+        "ping": "ま",
+        "pian": "マ",
+        "pronunciation": "ma"
+      },
+      {
+        "ping": "み",
+        "pian": "ミ",
+        "pronunciation": "mi"
+      },
+      {
+        "ping": "む",
+        "pian": "ム",
+        "pronunciation": "mu"
+      },
+      {
+        "ping": "め",
+        "pian": "メ",
+        "pronunciation": "me"
+      },
+      {
+        "ping": "も",
+        "pian": "モ",
+        "pronunciation": "mo"
+      }
+    ],
+    "ya": [
+      {
+        "ping": "や",
+        "pian": "ヤ",
+        "pronunciation": "ya"
+      },
+      {
+        "ping": "ゆ",
+        "pian": "ユ",
+        "pronunciation": "yu"
+      },
+      {
+        "ping": "よ",
+        "pian": "ヨ",
+        "pronunciation": "yo"
+      }
+    ],
+    "ra": [
+      {
+        "ping": "ら",
+        "pian": "ラ",
+        "pronunciation": "ra"
+      },
+      {
+        "ping": "り",
+        "pian": "リ",
+        "pronunciation": "ri"
+      },
+      {
+        "ping": "る",
+        "pian": "ル",
+        "pronunciation": "ru"
+      },
+      {
+        "ping": "れ",
+        "pian": "レ",
+        "pronunciation": "re"
+      },
+      {
+        "ping": "ろ",
+        "pian": "ロ",
+        "pronunciation": "ro"
+      }
+    ],
+    "wa": [
+      {
+        "ping": "わ",
+        "pian": "ワ",
+        "pronunciation": "wa"
+      },
+      {
+        "ping": "を",
+        "pian": "ヲ",
+        "pronunciation": "wo"
+      }
+    ],
+    "n": [
+      {
+        "ping": "ん",
+        "pian": "ン",
+        "pronunciation": "n"
+      }
+    ]
+  }
+}
