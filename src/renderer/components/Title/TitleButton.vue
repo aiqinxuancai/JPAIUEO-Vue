@@ -1,10 +1,6 @@
 <template>
-  <div 
-    class="titlebtn" 
-    v-bind:style="style"
-    v-on:click="click">
-    <i v-bind:class="buttontype"></i>
-    
+  <div class="titlebtn" v-bind:style="style" v-on:click="click">
+    <i v-bind:class="buttontype" style="color:#FFFFFF;"  ></i>
     </div>
 </template>
 
@@ -13,15 +9,15 @@ const { ipcRenderer: ipc } = require("electron");
 const style = {
   min: {
     //backgroundColor: 'green',
-    right: "80px"
+    right: "75px"
   },
   max: {
     //backgroundColor: 'yellow',
-    right: "45px"
+    right: "40px"
   },
   close: {
     //backgroundColor: 'black',
-    right: "10px"
+    right: "5px"
   }
 };
 export default {
@@ -59,5 +55,6 @@ export default {
   bottom: 0;
   margin: auto 0;
   -webkit-app-region: no-drag;
+
 }
 </style>

@@ -1,53 +1,86 @@
 <template>
   <div id="showpanel"> 
-    <el-popover
-        placement="top-start"
-        title="标题"
-        width="200"
-        trigger="hover"
-        content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-      
-        <el-button id="showbutton" type="text" slot="reference" @click="changeshow">{{ maintitle }}</el-button>
-      
-    </el-popover>
+    <el-button id="showbutton"  type="text" slot="reference" @click="myclick" @mouseover="mymouseover">{{showHiragana}}</el-button>
+    <el-button id="showbutton"  type="text" slot="reference" @click="myclick" @mouseover="mymouseover">{{showKatakana}}</el-button>
   </div>
 </template>
 
 <script>
-const { ipcRenderer: ipc } = require("electron");
 const fs = require("fs");
 
-import { clearInterval, setInterval, setTimeout, clearTimeout } from "timers";
+/**
+ * 生成随机数
+ */
+function randomNum(minNum, maxNum) {
+  switch (arguments.length) {
+    case 1:
+      return parseInt(Math.random() * minNum + 1, 10);
+      break;
+    case 2:
+      return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+      break;
+    default:
+      return 0;
+      break;
+  }
+}
 
 export default {
-  name: "ShowPanel",
-  props: ["type"],
-  computed: {
-    style: function() {}
+  data() {
+    return {
+      showHiragana: "A", //平假名
+      showKatakana: "A",
+      showPronunciation: "A"
+    };
   },
-  mounted() {},
+  computed: {},
   created() {
-    // let timer = setInterval(() => {
-    //   console.log("timer1");
-    // }, 1000);
-  },
-
-  onunload() {
-    console.log("onunload");
+    this.myclick();
   },
   methods: {
-    changeshow() {
-      console.log("changeshow");
+    myclick() {
+      console.log("myclick");
+      let self = this;
       fs.readFile(__dirname + "/data.json", "utf8", function(err, data) {
+        //优化为预读取？
         var root = JSON.parse(data);
-        //console.log(jsonObj.qing);
-        console.log(root.qing.a[1]);
+        //随机选择一个清音的行
+        let count = 0;
+        for (var key in root.qing) {
+          count++;
+        }
+        let num = randomNum(0, count - 1);
+
+        count = 0;
+        let soundKey = "";
+        for (var key in root.qing) {
+          if (count == num) {
+            soundKey = key;
+            break;
+          }
+          count++;
+        }
+
+        console.log(soundKey);
+        console.log(root.qing[soundKey]);
+
+        //随机选择这一行中的某一个音
+        let numSub = randomNum(0, root.qing[soundKey].length - 1);
+
+        console.log(root.qing[soundKey][numSub]);
+        self.showHiragana = root.qing[soundKey][numSub].ping;
+        self.showKatakana = root.qing[soundKey][numSub].pian;
+        self.showPronunciation = root.qing[soundKey][numSub].pronunciation;
       });
+    },
+    mymouseover() {
+      console.log("mymouseover");
     }
-  },
-  data() {
-    return { maintitle: "A" };
   }
+
+  // let timer = setInterval(() => {
+  //   console.log("timer1");
+  // }, 1000);
 };
 </script>
     
@@ -57,11 +90,28 @@ export default {
 }
 
 #showpanel {
-  width: 20px;
-  height: 20px;
-  top: 0;
-  bottom: 0;
   margin: auto 0;
   -webkit-app-region: no-drag;
+}
+
+.el-col {
+  border-radius: 2px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
 }
 </style>

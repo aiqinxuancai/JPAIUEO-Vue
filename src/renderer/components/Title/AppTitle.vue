@@ -1,9 +1,9 @@
 <template>
 
     <div id="title">
-      
-        <TitleButton type="min" />
-        <TitleButton type="max" />
+        <div id="titletext">JPAIUEO</div>
+        <!-- <TitleButton type="min" />
+        <TitleButton type="max" /> -->
         <TitleButton type="close" />
         <!-- <el-button v-on:click="handleAfterLeave">{{ name }}</el-button> -->
     </div>
@@ -11,12 +11,8 @@
 
 <script>
 
-
-
-
 import TitleButton from "./TitleButton.vue";
 //import Vue from "Vue";
-
 
 export default {
   name: "Title",
@@ -56,11 +52,23 @@ export default {
     
 <style>
 
+
+#titletext {
+  position: fixed;
+  width: 100%;
+  height: 10px;
+  color: aliceblue;
+  font-size: 0.8em;
+  margin: auto 0;
+  left: 4px;
+  -webkit-app-region: drag;
+}
+
 #title {
   position: absolute;
   width: 100%;
-  height: 28px;
-  background-color: rgb(198, 47, 47);
+  height: 16px;
+  background-color: #288add;
   -webkit-app-region: drag;
 }
 </style>
