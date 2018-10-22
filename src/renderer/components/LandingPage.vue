@@ -7,12 +7,11 @@
 </template>
 
 <script>
-import SystemInformation from "./LandingPage/SystemInformation";
 import ShowPanel from "./ShowPanel/ShowPanel";
 
 export default {
   name: "landing-page",
-  components: { SystemInformation ,ShowPanel},
+  components: {ShowPanel},
   methods: {
     open(link) {
       this.$electron.shell.openExternal(link);
