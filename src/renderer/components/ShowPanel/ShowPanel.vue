@@ -1,13 +1,16 @@
 <template>
-  <div id="showpanel"> 
-    <el-button id="showbutton"  type="text" slot="reference" @click="myclick" @mouseover="mymouseover">{{showHiragana}}</el-button>
-    <el-button id="showbutton"  type="text" slot="reference" @click="myclick" @mouseover="mymouseover">{{showKatakana}}</el-button>
+
+  <div id="showpanel" > 
+    <el-button id="button_hiragana"  type="text" slot="reference" @click="myclick" @mouseover.native="mymouseover" @mouseout.native="mymouseout">{{showHiragana}}</el-button>
+    <el-button id="button_katakana"  type="text" slot="reference" @click="myclick" @mouseover.native="mymouseover" @mouseout.native="mymouseout">{{showKatakana}}</el-button>
+    <div v-if="mouseOver" id="show_pronunciation" >{{showPronunciation}}</div>
+
   </div>
 </template>
 
 <script>
 const fs = require("fs");
-
+import { setInterval, clearInterval } from 'timers';
 /**
  * 生成随机数
  */
@@ -30,7 +33,9 @@ export default {
     return {
       showHiragana: "A", //平假名
       showKatakana: "A",
-      showPronunciation: "A"
+      showPronunciation: "A",
+      mouseOver: false,
+      hasChange: false
     };
   },
   computed: {},
@@ -39,6 +44,8 @@ export default {
   },
   methods: {
     myclick() {
+      this.hasChange = true;
+      this.mouseOver = false;
       console.log("myclick");
       let self = this;
       fs.readFile(__dirname + "/data.json", "utf8", function(err, data) {
@@ -71,10 +78,24 @@ export default {
         self.showHiragana = root.qing[soundKey][numSub].ping;
         self.showKatakana = root.qing[soundKey][numSub].pian;
         self.showPronunciation = root.qing[soundKey][numSub].pronunciation;
+        let timeId = setInterval(()=>{
+          self.hasChange = false;
+          clearInterval(timeId);
+          console.log("Clear hasChange");
+        }, 1000);
       });
     },
     mymouseover() {
       console.log("mymouseover");
+      if (this.hasChange) {
+        //无视操作
+      } else {
+        this.mouseOver = true;
+      }
+    },
+    mymouseout() {
+      console.log("mymouseout");
+      this.mouseOver = false;
     }
   }
 
@@ -85,11 +106,21 @@ export default {
 </script>
     
 <style>
-#showbutton {
-  font-size: 64px;
+#show_pronunciation {
+  font-size: 16px;
+  margin: auto;
+  width: auto;
+  height: auto;
+  color: rgb(235, 130, 32);
+}
+
+#button_hiragana,
+#button_katakana {
+  font-size: 50px;
 }
 
 #showpanel {
+  text-align: center;
   margin: auto 0;
   -webkit-app-region: no-drag;
 }
