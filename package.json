@@ -54,6 +54,7 @@
     }
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.4.1",
     "axios": "^0.18.0",
     "element-ui": "^2.4.8",
     "vue": "^2.5.16",

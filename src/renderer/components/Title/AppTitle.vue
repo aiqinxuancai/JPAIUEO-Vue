@@ -1,6 +1,6 @@
 <template>
 
-    <div id="title">
+    <div id="title_panel">
         <div id="titletext">JPAIUEO</div>
 
         <TitleButton type="close" />
@@ -33,19 +33,20 @@ export default {
 #titletext {
   position: fixed;
   width: 100%;
-  height: 10px;
-  color: aliceblue;
+  height: 22px;
+  color: #a6a7a8;
   font-size: 0.8em;
   margin: auto 0;
   left: 4px;
+  top: 2px;
   -webkit-app-region: drag;
 }
 
-#title {
+#title_panel {
   position: absolute;
   width: 100%;
-  height: 16px;
-  background-color: #288add;
+  height: 22px;
+  background-color: #202225;
   -webkit-app-region: drag;
 }
 </style>

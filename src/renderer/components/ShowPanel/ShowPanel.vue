@@ -1,10 +1,15 @@
 <template>
 
   <div id="showpanel" > 
-    <el-button id="button_hiragana"  type="text" slot="reference" @click="myclick" @mouseover.native="mymouseover" @mouseout.native="mymouseout">{{showHiragana}}</el-button>
-    <el-button id="button_katakana"  type="text" slot="reference" @click="myclick" @mouseover.native="mymouseover" @mouseout.native="mymouseout">{{showKatakana}}</el-button>
-    <div v-if="mouseOver" id="show_pronunciation" >{{showPronunciation}}</div>
     <audio ref="audio" @pause="onPause" @play="onPlay" v-bind:src="showPronunciationURL" ></audio>
+    <el-button id="button-hiragana"  type="text" slot="reference" @click="myclick" >{{showHiragana}}</el-button>
+    <el-button id="button-katakana"  type="text" slot="reference" @click="myclick" >{{showKatakana}}</el-button>
+    <div id="show-pronunciation" >
+      <el-button type="text" class="fas fa-volume-up" style="font-size:12px" @click="playSound"></el-button>
+      <el-button v-if="isShowPronunciation" type="text" @click="playSound">{{showPronunciation}}</el-button>
+    </div>
+    
+    
   </div>
 </template>
 
@@ -34,11 +39,9 @@ export default {
       showHiragana: "A", //平假名
       showKatakana: "A", //片假名
       showPronunciation: "A", //发音
-      showPronunciationURL: "A", //音频地址
-      mouseOver: false,
-      hasChange: false,
+      showPronunciationURL: "", //音频地址
+      isShowPronunciation: false,
       audio: {
-        // 该字段是音频是否处于播放状态的属性
         playing: false
       }
     };
@@ -49,8 +52,7 @@ export default {
   },
   methods: {
     myclick() {
-      this.hasChange = true;
-      this.mouseOver = false;
+      this.isShowPronunciation = false;
       //console.log("myclick");
       let self = this;
       fs.readFile(__dirname + "/data.json", "utf8", function(err, data) {
@@ -88,27 +90,18 @@ export default {
           root.qing[soundKey][numSub].ping +
           ".mp3";
 
-        let timeId = setInterval(() => {
-          self.hasChange = false;
-          clearInterval(timeId);
-          console.log("Clear hasChange");
-        }, 1000);
+        // let timeId = setInterval(() => {
+        //   clearInterval(timeId);
+        //   console.log("Clear hasChange");
+        // }, 1000);
       });
     },
-    mymouseover() {
-      //console.log("mymouseover");
-      if (this.hasChange) {
-        //无视操作
-      } else {
-        if (this.audio.playing == false) {
-          this.$refs.audio.play();
-        }
-        this.mouseOver = true;
+    playSound() {
+      if (this.audio.playing == false) {
+        this.$refs.audio.play();
+        this.isShowPronunciation = true;
       }
-    },
-    mymouseout() {
-      //console.log("mymouseout");
-      this.mouseOver = false;
+      
     },
     onPlay() {
       this.audio.playing = true;
@@ -126,16 +119,18 @@ export default {
 </script>
     
 <style>
-#show_pronunciation {
+#show-pronunciation {
   font-size: 16px;
-  margin: auto;
-  width: auto;
-  height: auto;
-  color: rgb(235, 130, 32);
+  height: 30px;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  color:#ffffff;
 }
 
-#button_hiragana,
-#button_katakana {
+#button-hiragana,
+#button-katakana {
   font-size: 50px;
 }
 
@@ -143,26 +138,5 @@ export default {
   text-align: center;
   margin: auto 0;
   -webkit-app-region: no-drag;
-}
-
-.el-col {
-  border-radius: 2px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
 }
 </style>

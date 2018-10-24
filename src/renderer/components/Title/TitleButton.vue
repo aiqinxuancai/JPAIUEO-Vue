@@ -1,6 +1,6 @@
 <template>
   <div class="titlebtn" v-bind:style="style" v-on:click="click">
-    <i v-bind:class="buttontype" style="color:#FFFFFF;"  ></i>
+    <i v-bind:class="buttontype" style="color:#a6a7a8;"  ></i>
     </div>
 </template>
 
