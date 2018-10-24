@@ -4,13 +4,13 @@
     <el-button id="button_hiragana"  type="text" slot="reference" @click="myclick" @mouseover.native="mymouseover" @mouseout.native="mymouseout">{{showHiragana}}</el-button>
     <el-button id="button_katakana"  type="text" slot="reference" @click="myclick" @mouseover.native="mymouseover" @mouseout.native="mymouseout">{{showKatakana}}</el-button>
     <div v-if="mouseOver" id="show_pronunciation" >{{showPronunciation}}</div>
-
+    <audio ref="audio" @pause="onPause" @play="onPlay" v-bind:src="showPronunciationURL" ></audio>
   </div>
 </template>
 
 <script>
 const fs = require("fs");
-import { setInterval, clearInterval } from 'timers';
+import { setInterval, clearInterval } from "timers";
 /**
  * 生成随机数
  */
@@ -32,10 +32,15 @@ export default {
   data() {
     return {
       showHiragana: "A", //平假名
-      showKatakana: "A",
-      showPronunciation: "A",
+      showKatakana: "A", //片假名
+      showPronunciation: "A", //发音
+      showPronunciationURL: "A", //音频地址
       mouseOver: false,
-      hasChange: false
+      hasChange: false,
+      audio: {
+        // 该字段是音频是否处于播放状态的属性
+        playing: false
+      }
     };
   },
   computed: {},
@@ -46,7 +51,7 @@ export default {
     myclick() {
       this.hasChange = true;
       this.mouseOver = false;
-      console.log("myclick");
+      //console.log("myclick");
       let self = this;
       fs.readFile(__dirname + "/data.json", "utf8", function(err, data) {
         //优化为预读取？
@@ -67,7 +72,7 @@ export default {
           }
           count++;
         }
-
+        //
         console.log(soundKey);
         console.log(root.qing[soundKey]);
 
@@ -78,7 +83,12 @@ export default {
         self.showHiragana = root.qing[soundKey][numSub].ping;
         self.showKatakana = root.qing[soundKey][numSub].pian;
         self.showPronunciation = root.qing[soundKey][numSub].pronunciation;
-        let timeId = setInterval(()=>{
+        self.showPronunciationURL =
+          "https://res.hjfile.cn/pt/m/jp/50yin/audio/" +
+          root.qing[soundKey][numSub].ping +
+          ".mp3";
+
+        let timeId = setInterval(() => {
           self.hasChange = false;
           clearInterval(timeId);
           console.log("Clear hasChange");
@@ -86,16 +96,26 @@ export default {
       });
     },
     mymouseover() {
-      console.log("mymouseover");
+      //console.log("mymouseover");
       if (this.hasChange) {
         //无视操作
       } else {
+        if (this.audio.playing == false) {
+          this.$refs.audio.play();
+        }
         this.mouseOver = true;
       }
     },
     mymouseout() {
-      console.log("mymouseout");
+      //console.log("mymouseout");
       this.mouseOver = false;
+    },
+    onPlay() {
+      this.audio.playing = true;
+    },
+    // 当音频暂停
+    onPause() {
+      this.audio.playing = false;
     }
   }
 
