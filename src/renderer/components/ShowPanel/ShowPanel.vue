@@ -5,8 +5,8 @@
     <el-button id="button-hiragana"  type="text" slot="reference" @click="myclick" >{{showHiragana}}</el-button>
     <el-button id="button-katakana"  type="text" slot="reference" @click="myclick" >{{showKatakana}}</el-button>
     <div id="show-pronunciation" >
-      <el-button type="text" class="fas fa-volume-up" style="font-size:12px" @click="playSound"></el-button>
-      <el-button v-if="isShowPronunciation" type="text" @click="playSound">{{showPronunciation}}</el-button>
+      <el-button size="mini" type="text" class="fas fa-volume-up" style="font-size:12px; height:10px;" @click="playSound"></el-button>
+      <el-button size="mini" v-if="isShowPronunciation" type="text" @click="playSound">{{showPronunciation}}</el-button>
     </div>
     
     
@@ -97,11 +97,8 @@ export default {
       });
     },
     playSound() {
-      if (this.audio.playing == false) {
-        this.$refs.audio.play();
-        this.isShowPronunciation = true;
-      }
-      
+      this.$refs.audio.play();
+      this.isShowPronunciation = true;
     },
     onPlay() {
       this.audio.playing = true;
@@ -121,12 +118,14 @@ export default {
 <style>
 #show-pronunciation {
   font-size: 16px;
-  height: 30px;
+  height: 26px;
   width: 100%;
   position: fixed;
   bottom: 0px;
   left: 0px;
-  color:#ffffff;
+  background-color: #2a2c31;
+  color: #ffffff;
+  vertical-align: top;
 }
 
 #button-hiragana,
