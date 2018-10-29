@@ -24,20 +24,22 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    height: 118,
     useContentSize: true,
-    width: 1000,
-    frame: false
+    width: 150,
+    frame: false,
+    focusable : false //窗口永远顶置
   })
 
-  mainWindow.loadURL(winURL)
+  mainWindow.setSkipTaskbar(true);
+  mainWindow.loadURL(winURL);
 
   mainWindow.on('closed', () => {
     mainWindow = null
   })
 
 
-  let trayIcon = path.join(__dirname, 'icons');//app是选取的目录
+  let trayIcon = path.join(__static, 'icons');//app是选取的目录
   tray = new Tray(path.join(trayIcon, 'icon.ico'))
   const contextMenu = Menu.buildFromTemplate([
     // { label: 'Item1', type: 'radio' },
@@ -53,7 +55,7 @@ function createWindow() {
     }
 
   ])
-  tray.setToolTip('This is my application.')
+  tray.setToolTip('JPAIUEO')
   tray.setContextMenu(contextMenu)
 
 }

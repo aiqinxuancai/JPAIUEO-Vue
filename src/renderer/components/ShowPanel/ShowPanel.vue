@@ -55,7 +55,7 @@ export default {
       this.isShowPronunciation = false;
       //console.log("myclick");
       let self = this;
-      fs.readFile(__dirname + "/data.json", "utf8", function(err, data) {
+      fs.readFile(__static + "/data.json", "utf8", function(err, data) {
         //优化为预读取？
         var root = JSON.parse(data);
         //随机选择一个清音的行
