@@ -27,13 +27,14 @@ function createWindow() {
     height: 118,
     useContentSize: true,
     width: 150,
-    frame: false,
-    focusable : false //窗口永远顶置
+    frame: false
   })
 
+  mainWindow.setAlwaysOnTop(true);
   mainWindow.setSkipTaskbar(true);
   mainWindow.loadURL(winURL);
 
+  
   mainWindow.on('closed', () => {
     mainWindow = null
   })
