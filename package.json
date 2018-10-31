@@ -52,7 +52,7 @@
     "linux": {
       "icon": "build/icons"
     }
-  },
+  }, 
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.4.1",
     "axios": "^0.18.0",
