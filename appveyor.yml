@@ -6,6 +6,9 @@ branches:
   only:
     - master
 
+only_commits:
+  message: /^trigger ci$/
+
 image: Visual Studio 2017
 platform:
   - x64
@@ -15,6 +18,8 @@ cache:
   - '%APPDATA%\npm-cache'
   - '%USERPROFILE%\.electron'
   - '%USERPROFILE%\AppData\Local\Yarn\cache'
+
+max_jobs: 1
 
 init:
   - git config --global core.autocrlf input
