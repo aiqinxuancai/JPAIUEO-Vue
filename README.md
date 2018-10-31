@@ -10,7 +10,8 @@
 </p>
 
 <p align="center" color="#6a737d">
-固定在桌面顶部浮窗，帮助学习和记忆50音的发音
+固定在桌面顶部浮窗，帮助学习和记忆50音的发音 <br>
+Hiragana and Katakana desktop learning tools
 </p>
 
 #### Soft Image  
