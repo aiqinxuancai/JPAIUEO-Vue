@@ -13,6 +13,9 @@
 固定在桌面顶部浮窗，帮助学习和记忆50音的发音
 </p>
 
+#### Soft Image  
+<img  src="./docs/images/soft.png" alt="electron-vue">
+
 #### Build Setup
 
 ``` bash
