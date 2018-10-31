@@ -6,10 +6,6 @@
 </template>
 
 <script>
-// export default {
-//   name: 'jpaiueo'
-// }
-
 import AppTitle from "./components/Title/AppTitle";
 export default {
   name: "jpaiueo",

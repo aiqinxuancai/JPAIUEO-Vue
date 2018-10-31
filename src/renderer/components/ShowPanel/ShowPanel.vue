@@ -89,11 +89,6 @@ export default {
           "https://res.hjfile.cn/pt/m/jp/50yin/audio/" +
           root.qing[soundKey][numSub].ping +
           ".mp3";
-
-        // let timeId = setInterval(() => {
-        //   clearInterval(timeId);
-        //   console.log("Clear hasChange");
-        // }, 1000);
       });
     },
     playSound() {
