@@ -16,6 +16,7 @@ Hiragana and Katakana desktop learning tools
 
 #### Soft Image  
 <img  src="./docs/images/soft.png" alt="electron-vue">
+<img  src="./docs/images/full.png" alt="electron-vue">
 
 #### Build Setup
 
