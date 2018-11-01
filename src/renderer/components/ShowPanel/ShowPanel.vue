@@ -8,14 +8,16 @@
       <el-button size="mini" type="text" class="fas fa-volume-up" style="font-size:12px; height:10px;" @click="playSound"></el-button>
       <el-button size="mini" v-if="isShowPronunciation" type="text" @click="playSound">{{showPronunciation}}</el-button>
     </div>
-    
-    
   </div>
 </template>
 
 <script>
 const fs = require("fs");
+const os = require("os");
+const storage = require("electron-json-storage");
+
 import { setInterval, clearInterval } from "timers";
+
 /**
  * 生成随机数
  */

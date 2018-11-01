@@ -7,16 +7,10 @@
 <script>
 const { ipcRenderer: ipc } = require("electron");
 const style = {
-  min: {
-    //backgroundColor: 'green',
-    right: "75px"
-  },
-  max: {
-    //backgroundColor: 'yellow',
-    right: "40px"
+  more: {
+    right: "5px"
   },
   close: {
-    //backgroundColor: 'black',
     right: "5px"
   }
 };
@@ -30,16 +24,15 @@ export default {
   },
   methods: {
     click: function() {
-      ipc.send(this.type);
+      console.log(this.$route.path);
+      ipc.send(this.type, this.$route.path);
     }
   },
   data() {
-    if (this.type == "min") {
-        return { buttontype: "el-icon-minus" };
-    } else if (this.type == "max") {
-        return { buttontype: "el-icon-circle-plus-outline" };
-    } else if (this.type == "close") {
-        return { buttontype: "el-icon-close" };
+    if (this.type == "close") {
+      return { buttontype: "el-icon-close" };
+    } else if (this.type == "more") {
+      return { buttontype: "el-icon-more" };
     }
     return { buttontype: "el-icon-minus" };
   }
@@ -55,6 +48,5 @@ export default {
   bottom: 0;
   margin: auto 0;
   -webkit-app-region: no-drag;
-
 }
 </style>

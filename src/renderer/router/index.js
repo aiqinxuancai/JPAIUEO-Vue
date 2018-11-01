@@ -11,6 +11,11 @@ export default new Router({
       component: require('@/components/LandingPage').default
     },
     {
+      path: '/fullDataWindow',
+      name: 'full-data-window',
+      component: require('@/components/FullDataWindow/FullDataWindow').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

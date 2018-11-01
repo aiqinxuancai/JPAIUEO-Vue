@@ -1,14 +1,12 @@
 <template>
-
-    <div id="title_panel">
+    <div id="title-panel">
         <div id="titletext">JPAIUEO</div>
-
-        <TitleButton type="close" />
+        <TitleButton type="more" v-if='showMore' />
+        <TitleButton type="close" v-if='showMore == false'/>
     </div>
 </template>
 
 <script>
-
 import TitleButton from "./TitleButton.vue";
 
 export default {
@@ -17,19 +15,15 @@ export default {
     TitleButton
   },
   data() {
-    return { name: "Vue.js" };
+    return { showMore: this.$route.path == "/" };
   },
   methods: {
-    handleAfterLeave() {
-     
-    }
+    handleAfterLeave() {}
   }
 };
 </script>
     
 <style>
-
-
 #titletext {
   position: fixed;
   width: 100%;
@@ -42,7 +36,7 @@ export default {
   -webkit-app-region: drag;
 }
 
-#title_panel {
+#title-panel {
   position: absolute;
   width: 100%;
   height: 22px;
