@@ -42,6 +42,8 @@ export default {
     return {
       showHiragana: "A", //平假名
       showKatakana: "A", //片假名
+      showHiraganaTrue: "A", //平假名
+      showKatakanaTrue: "A", //片假名
       showPronunciation: "A", //发音
       showPronunciationURL: "", //音频地址
       isShowPronunciation: false,
@@ -55,16 +57,27 @@ export default {
   },
   computed: {},
   created() {
-    this.isShowHiragana = remote.getGlobal("isShowHiragana");
-    this.isShowKatakana = remote.getGlobal("isShowKatakana");
+    //this.updateShowState();
     ipcRenderer.on("on-show-state-change", (event, arg) => {
-      console.log(arg);
-      this.isShowHiragana = remote.getGlobal("isShowHiragana");
-      this.isShowKatakana = remote.getGlobal("isShowKatakana");
+      this.updateShowState();
     });
     this.myclick();
   },
   methods: {
+    updateShowState() {
+      this.isShowHiragana = remote.getGlobal("isShowHiragana");
+      this.isShowKatakana = remote.getGlobal("isShowKatakana");
+      if (this.isShowHiragana == false) {
+        this.showHiragana = "×";
+      } else {
+        this.showHiragana = this.showHiraganaTrue;
+      }
+      if (this.isShowKatakana == false) {
+        this.showKatakana = "×";
+      } else {
+        this.showKatakana = this.showKatakanaTrue;
+      }
+    },
     myclick() {
       this.isShowPronunciation = false;
       //console.log("myclick");
@@ -98,17 +111,16 @@ export default {
         console.log(root.qing[soundKey][numSub]);
         self.showHiragana = root.qing[soundKey][numSub].ping;
         self.showKatakana = root.qing[soundKey][numSub].pian;
+
+        self.showHiraganaTrue = root.qing[soundKey][numSub].ping;
+        self.showKatakanaTrue = root.qing[soundKey][numSub].pian;
+
         self.showPronunciation = root.qing[soundKey][numSub].pronunciation;
         self.showPronunciationURL =
           "https://res.hjfile.cn/pt/m/jp/50yin/audio/" +
           root.qing[soundKey][numSub].ping +
           ".mp3";
-        if (self.isShowHiragana == false) {
-          self.showHiragana = "×";
-        }
-        if (self.isShowKatakana == false) {
-          self.showKatakana = "×";
-        }
+        self.updateShowState();
       });
     },
     playSound() {

@@ -44,8 +44,7 @@ function createWindow() {
     resizable: isResizable
   })
 
-  if (isAlwaysOnTop)
-  {
+  if (isAlwaysOnTop) {
     mainWindow.setAlwaysOnTop(true);
     mainWindow.setSkipTaskbar(true);
   }
@@ -117,15 +116,15 @@ ipcMain.on('more', (event) => {
   }));
   menu.append(new MenuItem({ type: 'separator' }));
   menu.append(new MenuItem({
-    label: '显示平假名', type :'checkbox', checked : global.isShowHiragana, click: () => {
+    label: '显示平假名', type: 'checkbox', checked: global.isShowHiragana, click: () => {
       global.isShowHiragana = !global.isShowHiragana;
-      mainWindow.webContents.send('on-show-state-change', 'nihao');
+      mainWindow.webContents.send('on-show-state-change', 'Update');
     }
   }));
   menu.append(new MenuItem({
-    label: '显示片假名', type : 'checkbox', checked : global.isShowKatakana, click: () => {
+    label: '显示片假名', type: 'checkbox', checked: global.isShowKatakana, click: () => {
       global.isShowKatakana = !global.isShowKatakana;
-      mainWindow.webContents.send('on-show-state-change', 'nihao');
+      mainWindow.webContents.send('on-show-state-change', 'Update');
     }
   }));
 
