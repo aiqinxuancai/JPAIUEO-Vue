@@ -14,13 +14,21 @@
 Hiragana and Katakana desktop learning tools
 </p>
 
-#### Soft Image  
+## Soft Image  
 <img  src="./docs/images/soft.png" alt="electron-vue">
 <img  src="./docs/images/full.png" alt="electron-vue">
 
-#### Build Setup
+## 功能
+### 掌握程度的记录功能
+在主窗口切换一个新的音，如果点了听语音则说明未掌握，如直接跳过则认为掌握，最终会以三个等级显示在50音图中，清晰标示你掌握和未掌握的音。  
+建议屏蔽一个平假名或片假名进行掌握，否则你可能因为记忆了这个音的平假名或片假名其中之一，而认为另一个形态也是掌握的。
 
-``` bash
+## Update
+##
+
+## Build Setup
+
+``` bash 
 # install dependencies
 npm install
 
