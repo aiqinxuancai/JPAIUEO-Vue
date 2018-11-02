@@ -1,6 +1,6 @@
 {
   "name": "jpaiueo",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "author": "爱琴炫彩 <aiqinxuancai@163.com>",
   "description": "An electron-vue project",
   "license": null,
@@ -56,7 +56,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.4.1",
     "axios": "^0.18.0",
-    "electron-json-storage": "^4.1.4",
+    "electron-store": "^2.0.0",
     "element-ui": "^2.4.8",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
