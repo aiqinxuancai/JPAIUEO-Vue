@@ -1,8 +1,9 @@
-import { app, BrowserWindow, Menu, Tray } from 'electron'
+import { app, BrowserWindow, Menu, Tray, dialog } from 'electron'
 import { ipcMain } from 'electron'
 import { MenuItem } from 'electron'
+const Store = require('electron-store');
 const os = require('os');
-const storage = require('electron-json-storage');
+
 
 /**
  * Set `__static` path to static files in production
@@ -17,6 +18,11 @@ let mainWindow;
 let fullDataWindow; //50音完整表的窗口
 let isResizable = process.env.NODE_ENV === 'development' ? true : false;
 let windowSize = process.env.NODE_ENV === 'development' ? { w: 1000, h: 500 } : { w: 150, h: 118 };
+let isAlwaysOnTop = process.env.NODE_ENV === 'development' ? false : true;
+
+global.storage = new Store();
+global.isShowHiragana = true;
+global.isShowKatakana = true;
 
 const path = require('path');
 
@@ -39,9 +45,14 @@ function createWindow() {
     resizable: isResizable
   })
 
+  if (isAlwaysOnTop) {
+    mainWindow.setAlwaysOnTop(true);
+    mainWindow.setSkipTaskbar(true);
+  }
 
-  mainWindow.setAlwaysOnTop(true);
-  mainWindow.setSkipTaskbar(true);
+  //初始化存储结构
+  //global.storage.setDataPath(app.getPath("appData") + "/JPAIUEO/storage");
+
   mainWindow.loadURL(winURL);
 
 
@@ -53,12 +64,6 @@ function createWindow() {
   let trayIcon = path.join(__static, 'icons');//app是选取的目录
   tray = new Tray(path.join(trayIcon, 'icon.ico'))
   const contextMenu = Menu.buildFromTemplate([
-    {
-      label: '打开50音表',
-      click: function () {
-        OpenFullDataWindow();
-      }
-    },
     {
       label: '退出',
       click: function () {
@@ -115,6 +120,42 @@ ipcMain.on('more', (event) => {
   }));
   menu.append(new MenuItem({ type: 'separator' }));
   menu.append(new MenuItem({
+    label: '清除学习进度', click: () => {
+      const options = {
+        type: 'info',
+        title: '提示',
+        message: "是否确认清空？",
+        buttons: ['Yes', 'No']
+      }
+      dialog.showMessageBox(options, (index) => {
+        if (index === 0) {
+          global.storage.clear();
+        }
+        else {
+
+        }
+      })
+    }
+  }));
+  menu.append(new MenuItem({ type: 'separator' }));
+  menu.append(new MenuItem({
+    label: '显示平假名', type: 'checkbox', checked: global.isShowHiragana, click: () => {
+      global.isShowHiragana = !global.isShowHiragana;
+      mainWindow.webContents.send('on-show-state-change', 'update');
+    }
+  }));
+  menu.append(new MenuItem({
+    label: '显示片假名', type: 'checkbox', checked: global.isShowKatakana, click: () => {
+      global.isShowKatakana = !global.isShowKatakana;
+      mainWindow.webContents.send('on-show-state-change', 'update');
+    }
+  }));
+
+
+
+
+  menu.append(new MenuItem({ type: 'separator' }));
+  menu.append(new MenuItem({
     label: '退出', click: () => {
       app.quit();
       app.quit();
@@ -129,7 +170,7 @@ function OpenFullDataWindow() {
   const modalPath = process.env.NODE_ENV === 'development'
     ? 'http://localhost:9080/#/fullDataWindow'
     : `file://${__dirname}/index.html#fullDataWindow`;
-  fullDataWindow = new BrowserWindow({ width: 570, height: 700, webPreferences: { webSecurity: false }, frame: false });
+  fullDataWindow = new BrowserWindow({ width: 580, height: 726, webPreferences: { webSecurity: false }, frame: false });
   fullDataWindow.on('close', function () { fullDataWindow = null });
   fullDataWindow.loadURL(modalPath);
 }

@@ -14,9 +14,12 @@
 <script>
 const fs = require("fs");
 const os = require("os");
-const storage = require("electron-json-storage");
 
+let remote = require("electron").remote;
+let ipcRenderer = require("electron").ipcRenderer;
 import { setInterval, clearInterval } from "timers";
+
+const storage = remote.getGlobal("storage");
 
 /**
  * 生成随机数
@@ -40,23 +43,69 @@ export default {
     return {
       showHiragana: "A", //平假名
       showKatakana: "A", //片假名
+      showHiraganaTrue: "A", //平假名 用于存储
+      showKatakanaTrue: "A", //片假名 用于存储
       showPronunciation: "A", //发音
       showPronunciationURL: "", //音频地址
       isShowPronunciation: false,
+      isShowHiragana: true, //是否显示平假名
+      isShowKatakana: true, //是否显示片假名
+
       audio: {
         playing: false
       }
     };
   },
-  computed: {},
+  computed: {
+
+  },
   created() {
+    ipcRenderer.on("on-show-state-change", (event, arg) => {
+      this.updateShowState();
+    });
     this.myclick();
   },
   methods: {
+    updateShowState() {
+      this.isShowHiragana = remote.getGlobal("isShowHiragana");
+      this.isShowKatakana = remote.getGlobal("isShowKatakana");
+      if (this.isShowHiragana == false) {
+        this.showHiragana = "×";
+      } else {
+        this.showHiragana = this.showHiraganaTrue;
+      }
+      if (this.isShowKatakana == false) {
+        this.showKatakana = "×";
+      } else {
+        this.showKatakana = this.showKatakanaTrue;
+      }
+    },
+    saveProficiency(name, score) {
+      //存储熟练度
+      console.log("There is data stored as " + score);
+      var nowProficiency = storage.get(name, 0);
+      storage.set(name, nowProficiency + score);
+    },
     myclick() {
+      //对记忆进行分数增减
+      if (this.isShowHiragana) {
+        if (this.isShowPronunciation) {
+          //this.saveProficiency(this.showHiraganaTrue, -1); //查看了读音，减分
+        } else {
+          this.saveProficiency(this.showHiraganaTrue, 1); //没有查看读音就切换，加分
+        }
+      }
+      if (this.isShowKatakana) {
+        if (this.isShowPronunciation) {
+          //this.saveProficiency(this.showKatakanaTrue, -1); //查看了读音，减分
+        } else {
+          this.saveProficiency(this.showKatakanaTrue, 1); //没有查看读音就切换，加分
+        }
+      }
+
       this.isShowPronunciation = false;
-      //console.log("myclick");
       let self = this;
+
       fs.readFile(__static + "/data.json", "utf8", function(err, data) {
         //优化为预读取？
         var root = JSON.parse(data);
@@ -86,11 +135,16 @@ export default {
         console.log(root.qing[soundKey][numSub]);
         self.showHiragana = root.qing[soundKey][numSub].ping;
         self.showKatakana = root.qing[soundKey][numSub].pian;
+
+        self.showHiraganaTrue = root.qing[soundKey][numSub].ping;
+        self.showKatakanaTrue = root.qing[soundKey][numSub].pian;
+
         self.showPronunciation = root.qing[soundKey][numSub].pronunciation;
         self.showPronunciationURL =
           "https://res.hjfile.cn/pt/m/jp/50yin/audio/" +
           root.qing[soundKey][numSub].ping +
           ".mp3";
+        self.updateShowState();
       });
     },
     playSound() {
