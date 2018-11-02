@@ -16,6 +16,8 @@ const fs = require("fs");
 const os = require("os");
 const storage = require("electron-json-storage");
 
+let remote = require("electron").remote;
+let ipcRenderer = require("electron").ipcRenderer;
 import { setInterval, clearInterval } from "timers";
 
 /**
@@ -43,6 +45,9 @@ export default {
       showPronunciation: "A", //发音
       showPronunciationURL: "", //音频地址
       isShowPronunciation: false,
+      isShowHiragana: true, //显示平假名
+      isShowKatakana: true, //显示片假名
+
       audio: {
         playing: false
       }
@@ -50,6 +55,13 @@ export default {
   },
   computed: {},
   created() {
+    this.isShowHiragana = remote.getGlobal("isShowHiragana");
+    this.isShowKatakana = remote.getGlobal("isShowKatakana");
+    ipcRenderer.on("on-show-state-change", (event, arg) => {
+      console.log(arg);
+      this.isShowHiragana = remote.getGlobal("isShowHiragana");
+      this.isShowKatakana = remote.getGlobal("isShowKatakana");
+    });
     this.myclick();
   },
   methods: {
@@ -91,6 +103,12 @@ export default {
           "https://res.hjfile.cn/pt/m/jp/50yin/audio/" +
           root.qing[soundKey][numSub].ping +
           ".mp3";
+        if (self.isShowHiragana == false) {
+          self.showHiragana = "×";
+        }
+        if (self.isShowKatakana == false) {
+          self.showKatakana = "×";
+        }
       });
     },
     playSound() {
