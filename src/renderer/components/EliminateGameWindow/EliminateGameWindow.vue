@@ -1,35 +1,27 @@
 <template>
-  <div id="wrapper">
+  <div id="eliminate-game-wrapper">
     <audio ref="audio" :src="nowPlaySrc" ></audio>
-    <main >
-      <el-row id="full-data-main-panel"  >
-        <el-col class="full-data-main-panel-line" :span="24" v-for="(value, key) in tableData.qing" :key="key"  > 
-            <el-col :span="2">{{key}}</el-col>
+    <main>
+      <div class="el-row" id="eliminate-top-timer-panel">
+        <el-col :span="2" :offset="8"  >
+          <div class="info-div-text-title">剩余时间</div>
+        </el-col>
+        <el-col :span="6" >
+          <el-progress :percentage="70"></el-progress>
+        </el-col>
+      </div>
+      <el-row id="eliminate-main-panel" >
+        <el-col :span="24" v-for="(value, key) in tableData.qing" :key="key" style="margin-bottom: 1px;background-color:rgba(255,255,255,0.03);" > 
+            <el-col :span="2" style="height: 100%;line-height: 60px;color: #72767d;font-size: 24px; text-align: center;margin-left: 14px;" >{{key}}</el-col>
             <el-col id="item" :span="4" :push="tabName[valueSub.pronunciation]" v-for="(valueSub, index) in value" :key="index"  >
                 <el-button type="text" size="mini" :style="style(valueSub.ping)" @click="playSound(valueSub.ping)">{{valueSub.ping}}</el-button>
                 <el-button type="text" size="mini" :style="style(valueSub.pian)" @click="playSound(valueSub.ping)">{{valueSub.pian}}</el-button>
-                <div >{{valueSub.pronunciation}}</div>
+                <div style="font-size:14px;color:#A6A7A8;top:-10px;bottom: 0px;width: 100%;">{{valueSub.pronunciation}}</div>
             </el-col>
             <el-col :span="2" ></el-col>
         </el-col>
       </el-row>
-      <div class="el-row" id="full-data-buttom-panel">
-        <el-col :span="2" :offset="8" >
-          <div class="info-div-text-title">掌握程度</div>
-        </el-col>
-        <el-col :span="2" >
-          <div class="info-div-color" style="background-color: #fc9c12;"></div>
-          <div class="info-div-text">初</div>
-        </el-col>
-        <el-col :span="2">
-          <div class="info-div-color" style="background-color: #438a08;"></div>
-          <div class="info-div-text">中</div>
-        </el-col>
-        <el-col :span="2">
-          <div class="info-div-color" style="background-color: #409eff;"></div>
-          <div class="info-div-text">高</div>
-        </el-col>
-      </div>
+      
     </main>
   </div>
 </template>
@@ -38,6 +30,10 @@
 const fs = require("fs");
 const remote = require("electron").remote;
 const storage = remote.getGlobal("storage");
+
+var eliminateGame = require('../../../main/EliminateGame');
+var b = new eliminateGame();
+b.show();
 
 const style = {
   level1: {
@@ -91,6 +87,9 @@ export default {
       self.tableData = JSON.parse(data);
       console.log(self.tableData.qing);
     });
+
+
+
   },
 
   computed: {},
@@ -109,75 +108,39 @@ export default {
 </script>
 
 <style>
-/*主数据面板*/
-#full-data-main-panel {
-  text-align: center;
-  top: 6px;
-}
-
-/*行数据-每个音的元素*/
-#full-data-main-panel #item {
-  margin-top: 2px;
-  margin-left: 0px;
-}
-
-/*行数据-每个字母的读音*/
-#full-data-main-panel #item > div {
-  font-size: 14px;
-  color: #a6a7a8;
-  top: -10px;
-  bottom: 0px;
-  width: 100%;
-}
-
-/*每行数据的panel样式*/
-#full-data-main-panel > .el-col {
-  margin-bottom: 1px;
-  background-color: rgba(255, 255, 255, 0.03);
-}
-
-/*每行第一个元素，显示为每行的主音*/
-#full-data-main-panel > .el-col > .el-col-2 {
-  height: 100%;
-  line-height: 60px;
-  color: #72767d;
-  font-size: 24px;
-  text-align: center;
-  margin-left: 14px;
-}
-
-/*底部说明文档的面板*/
-#full-data-buttom-panel {
+#eliminate-top-timer-panel {
   font-size: 12px;
   height: 26px;
   width: 100%;
+  top: 22px;
   position: fixed;
-  bottom: 0px;
   left: 0px;
+  text-align: center;
   background-color: #2a2c31;
   color: #ffffff;
-  vertical-align: bottom;
+  vertical-align: top;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 
-#full-data-buttom-panel .el-col {
+#eliminate-top-timer-panel .el-col {
+  padding: 5px 0 0 0;
+}
+
+#eliminate-main-panel {
   text-align: center;
-  padding-top: 3px;
+  top: 6px;
 }
 
-#full-data-buttom-panel .info-div-color {
-  display: inline-block;
-  height: 8px;
-  width: 8px;
-}
-
-#full-data-buttom-panel .info-div-text {
-  display: inline-block;
-  color: #a6a7a8;
-}
-
-#full-data-buttom-panel .info-div-text-title {
-  color: #a6a7a8;
+#eliminate-game-wrapper {
+  /* background: radial-gradient(
+    ellipse at top left,
+    rgba(255, 255, 255, 1) 40%,
+    rgba(229, 229, 229, 0.9) 100%
+  ); */
+  background-color: #2f3136;
+  height: 100vh;
+  padding: 42px 4px;
+  width: 100vw;
 }
 </style>

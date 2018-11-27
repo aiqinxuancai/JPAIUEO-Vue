@@ -16,6 +16,11 @@ export default new Router({
       component: require('@/components/FullDataWindow/FullDataWindow').default
     },
     {
+      path: '/eliminateGameWindow',
+      name: 'eliminate-game-window',
+      component: require('@/components/EliminateGameWindow/EliminateGameWindow').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

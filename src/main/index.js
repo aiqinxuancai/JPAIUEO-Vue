@@ -16,6 +16,8 @@ if (process.env.NODE_ENV !== 'development') {
 let tray = null;
 let mainWindow;
 let fullDataWindow; //50音完整表的窗口
+let eliminateGameWindow; //消除游戏窗口
+
 let isResizable = process.env.NODE_ENV === 'development' ? true : false;
 let windowSize = process.env.NODE_ENV === 'development' ? { w: 1000, h: 500 } : { w: 150, h: 118 };
 let isAlwaysOnTop = process.env.NODE_ENV === 'development' ? false : true;
@@ -105,8 +107,9 @@ ipcMain.on('max', e => {
 ipcMain.on('close', (event, arg) => {
   if (arg == "/fullDataWindow") {
     fullDataWindow.close(); //关闭对应的页面
-  }
-  else {
+  } else if (arg == "/eliminateGameWindow") {
+    eliminateGameWindow.close(); //关闭对应的页面
+  } else {
     mainWindow.close();
   }
 });
@@ -118,6 +121,13 @@ ipcMain.on('more', (event) => {
       OpenFullDataWindow();
     }
   }));
+  menu.append(new MenuItem({
+    label: '消除游戏', click: () => {
+      OpenEliminateGameWindow();
+    }
+  }));
+
+
   menu.append(new MenuItem({ type: 'separator' }));
   menu.append(new MenuItem({
     label: '清除学习进度', click: () => {
@@ -151,9 +161,6 @@ ipcMain.on('more', (event) => {
     }
   }));
 
-
-
-
   menu.append(new MenuItem({ type: 'separator' }));
   menu.append(new MenuItem({
     label: '退出', click: () => {
@@ -173,6 +180,15 @@ function OpenFullDataWindow() {
   fullDataWindow = new BrowserWindow({ width: 580, height: 726, webPreferences: { webSecurity: false }, frame: false });
   fullDataWindow.on('close', function () { fullDataWindow = null });
   fullDataWindow.loadURL(modalPath);
+}
+
+function OpenEliminateGameWindow() {
+  const modalPath = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:9080/#/eliminateGameWindow'
+    : `file://${__dirname}/index.html#eliminateGameWindow`;
+  eliminateGameWindow = new BrowserWindow({ width: 580, height: 726, webPreferences: { webSecurity: false }, frame: false });
+  eliminateGameWindow.on('close', function () { eliminateGameWindow = null });
+  eliminateGameWindow.loadURL(modalPath);
 }
 
 
